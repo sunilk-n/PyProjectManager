@@ -3,24 +3,19 @@ import os as _os
 import click
 import logging
 
-from pyPm.initialize import projectInitialize as pInit
-
 from pyPm import __version__
+from pyPm.initialize import projectInitialize as pInit
 
 OUTPUT_DIR = _os.getcwd()
 log = logging.getLogger(__name__)
 
 
 @click.group()
-@click.option('--version', is_flag=True, help="Displays project version")
+@click.version_option(version=__version__, prog_name="PyProjectManager")
 @click.option('--verbose', is_flag=True, help='Displays all the log.')
 @click.pass_context
-def cli(context, version: bool, verbose: bool):
-    if version:
-        print(__version__)
-
+def cli(context, verbose):
     if verbose:
-        # log.setLevel(level=logging.INFO)
         logging.basicConfig(level=logging.INFO)
     else:
         logging.basicConfig(level=logging.WARNING)

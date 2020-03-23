@@ -9,11 +9,11 @@ from pyPm import __version__
 
 log = logging.getLogger(__name__)
 
+PROJECT_NAME = None
 PACKAGE_NAME = None
 PACKAGE_VERSION = "1.0.0"
 DESCRIPTION = None
 ENTRY_POINT = "__main__.py"
-TEST_COMMAND = None
 GIT_REPO = None
 KEYWORDS = None
 AUTHOR = None
@@ -36,7 +36,7 @@ def create_files(output, file_name, data=None):
 
 
 def get_project_details(install_path):
-    package_file = ".%s.json" % PACKAGE_NAME
+    package_file = ".%s.json" % PROJECT_NAME
     pkg_file_path = _os.path.join(install_path, package_file)
     if check_for_project(install_path, pkg_file=package_file):
         with open(pkg_file_path) as fd:
@@ -45,7 +45,7 @@ def get_project_details(install_path):
 
 
 def check_for_project(install_path, pkg_file=None):
-    package_file = pkg_file or ".%s.json" % PACKAGE_NAME
+    package_file = pkg_file or ".%s.json" % PROJECT_NAME
     pkg_file_path = _os.path.join(install_path, package_file)
     if _os.path.exists(pkg_file_path):
         return True
@@ -62,18 +62,24 @@ def create_directory(output, dir_name):
 
 
 def init_project(install_path):
-    global PACKAGE_NAME, PACKAGE_VERSION, DESCRIPTION, ENTRY_POINT, TEST_COMMAND, GIT_REPO
+    global PROJECT_NAME, PACKAGE_NAME, PACKAGE_VERSION, DESCRIPTION, ENTRY_POINT, GIT_REPO
     global KEYWORDS, AUTHOR, AUTHOR_EMAIL, LICENSE
     pkg_name = _os.path.basename(install_path)
     package_dict = {}
-    PACKAGE_NAME = query_detail("Project Name", default=pkg_name)
+    PROJECT_NAME = query_detail("Project Name", default=pkg_name)
     if check_for_project(install_path):
         package_dict = get_project_details(install_path)
-        log.warning("%s already been setup in the directory" % PACKAGE_NAME)
+        log.warning("%s already been setup in the directory" % PROJECT_NAME)
+    PACKAGE_NAME = query_detail("Package Name", default=PROJECT_NAME)
     PACKAGE_VERSION = query_detail("Project Version", default=package_dict.get('version', None) or PACKAGE_VERSION)
+    try:
+        pkg_version = Version(PACKAGE_VERSION)
+    except Exception as err:
+        log.error("%s, Please use semantic versioning syntax i.e., 12.3.4 (or) 2.3.4-beta.5" % err)
+        sys.exit()
+
     DESCRIPTION = query_detail("Description", default=package_dict.get('description', None))
     ENTRY_POINT = query_detail("Entry Point", default=package_dict.get('main', None) or ENTRY_POINT)
-    TEST_COMMAND = query_detail("Test Command", default=package_dict['scripts'].get('version', None) if package_dict.get('scripts', False) else None)
     GIT_REPO = query_detail("Git Repository", default=package_dict.get('url', None))
     KEYWORDS = query_detail("Keywords", default=package_dict.get('keywords', None))
     AUTHOR = query_detail("Author", default=package_dict.get('author', None))
@@ -81,13 +87,11 @@ def init_project(install_path):
     LICENSE = query_detail("License", default=package_dict.get('license', None) or LICENSE)
 
     package_dict = {
-        "name": PACKAGE_NAME,
+        "name": PROJECT_NAME,
+        "package": PACKAGE_NAME,
         "version": PACKAGE_VERSION,
         "description": DESCRIPTION,
         "main": ENTRY_POINT,
-        "scripts": {
-            "test": "No test specified",
-        },
         "author": AUTHOR,
         "authorMail": AUTHOR_EMAIL,
         "license": LICENSE,
@@ -109,7 +113,7 @@ def query_detail(query, default=None):
     query = query.strip() + ": "
     if default:
         query = query + "(%s) " % default
-    result = input(query)
+    result = raw_input(query)
 
     if result:
         return result

@@ -1,2 +1,4 @@
-from traVer import Version
-__version__ = Version("1.0.0-beta.1").version
+__version__ = "1.0.0-beta.1"
+__name__ = "PyProjectManager"
+__author__ = ["Sunil Kumar Nerella"]
+__author_email__ = ["sunil.nerella39@gmail.com"]
