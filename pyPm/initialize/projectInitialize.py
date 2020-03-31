@@ -35,17 +35,17 @@ def create_files(output, file_name, data=None):
     return True
 
 
-def get_project_details(install_path):
-    package_file = ".%s.json" % PROJECT_NAME
+def get_project_details(install_path, pkg_file=None):
+    package_file = ".%s.json" % (pkg_file or PROJECT_NAME)
     pkg_file_path = _os.path.join(install_path, package_file)
-    if check_for_project(install_path, pkg_file=package_file):
+    if check_for_project(install_path, pkg_file=pkg_file):
         with open(pkg_file_path) as fd:
             data = json.load(fd)
         return data
 
 
 def check_for_project(install_path, pkg_file=None):
-    package_file = pkg_file or ".%s.json" % PROJECT_NAME
+    package_file = ".%s.json" % (pkg_file or PROJECT_NAME)
     pkg_file_path = _os.path.join(install_path, package_file)
     if _os.path.exists(pkg_file_path):
         return True
@@ -61,12 +61,15 @@ def create_directory(output, dir_name):
     log.info("%s directory created in %s" % (dir_name, output))
 
 
-def init_project(install_path):
+def init_project(install_path, project=None):
     global PROJECT_NAME, PACKAGE_NAME, PACKAGE_VERSION, DESCRIPTION, ENTRY_POINT, GIT_REPO
     global KEYWORDS, AUTHOR, AUTHOR_EMAIL, LICENSE
     pkg_name = _os.path.basename(install_path)
     package_dict = {}
-    PROJECT_NAME = query_detail("Project Name", default=pkg_name)
+    if project:
+        log.info("Project name set to: %s" % project)
+        query_detail("Project Name", default=project, accepted=True)
+    PROJECT_NAME = project or query_detail("Project Name", default=pkg_name)
     if check_for_project(install_path):
         package_dict = get_project_details(install_path)
         log.warning("%s already been setup in the directory" % PROJECT_NAME)
@@ -96,6 +99,7 @@ def init_project(install_path):
         "authorMail": AUTHOR_EMAIL,
         "license": LICENSE,
         "url": GIT_REPO,
+        "dependency":[],
     }
 
     log.warning("About to write the following dictionary to <package>.json\n")
@@ -106,13 +110,17 @@ def init_project(install_path):
         log.warning("Project creation exited by user.")
         sys.exit()
 
-    create_files(install_path, ".%s.json" % PACKAGE_NAME, data=package_dict)
+    create_files(install_path, ".%s.json" % PROJECT_NAME, data=package_dict)
+    return package_dict
 
 
-def query_detail(query, default=None):
+def query_detail(query, default=None, accepted=False):
     query = query.strip() + ": "
     if default:
         query = query + "(%s) " % default
+    if accepted:
+        print(query)
+        return
     result = raw_input(query)
 
     if result:
