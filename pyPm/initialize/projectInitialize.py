@@ -5,7 +5,6 @@ import pprint
 import json
 
 from traVer import Version
-from pyPm import __version__
 
 log = logging.getLogger(__name__)
 
@@ -51,15 +50,6 @@ def check_for_project(install_path, pkg_file=None):
         return True
     return False
 
-def create_directory(output, dir_name):
-    if _os.path.exists(output):
-        log.warning("Directory name already exists.")
-        return
-
-    dir_path = _os.path.join(output, dir_name)
-    _os.makedirs(dir_path)
-    log.info("%s directory created in %s" % (dir_name, output))
-
 
 def init_project(install_path, project=None):
     global PROJECT_NAME, PACKAGE_NAME, PACKAGE_VERSION, DESCRIPTION, ENTRY_POINT, GIT_REPO
@@ -99,7 +89,8 @@ def init_project(install_path, project=None):
         "authorMail": AUTHOR_EMAIL,
         "license": LICENSE,
         "url": GIT_REPO,
-        "dependency":[],
+        "dependency": [],
+        "module": [],
     }
 
     log.warning("About to write the following dictionary to <package>.json\n")
@@ -121,7 +112,7 @@ def query_detail(query, default=None, accepted=False):
     if accepted:
         print(query)
         return
-    result = raw_input(query)
+    result = input(query)
 
     if result:
         return result

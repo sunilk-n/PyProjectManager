@@ -1,11 +1,14 @@
 from setuptools import setup
 import os
+from glob import glob
+from shutil import rmtree
 
 packageName = "pyPm"
 try:
     from setuptools.command.clean import clean as clean_command
-except:
+except ImportError as err:
     from distutils.command.clean import clean as clean_command
+
 
 class Clean(clean_command):
     def run(self):
@@ -20,6 +23,7 @@ class Clean(clean_command):
             for candidate in delete_everywhere:
                 rmtree_glob(os.path.join(visible_dir, candidate))
                 rmtree_glob(os.path.join(visible_dir, "*", candidate))
+
 
 def rmtree_glob(candidate):
     for fobj in glob(candidate):
@@ -56,10 +60,12 @@ setup(
         packageName,
         "%s.initialize" % packageName,
         "%s.install" % packageName,
+        "%s.utilities" % packageName,
     ],
     install_requires=[
         "Click",
-        "traVer"
+        "traVer == 1.1.0",
+        "setuptools"
     ],
     license="GNU GENERAL PUBLIC LICENSE",
     long_description_content_type='text/markdown',
