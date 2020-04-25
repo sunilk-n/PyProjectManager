@@ -65,7 +65,8 @@ setup(
     install_requires=[
         "Click",
         "traVer == 1.1.0",
-        "setuptools"
+        "setuptools",
+        "importlib_metadata"
     ],
     license="GNU GENERAL PUBLIC LICENSE",
     long_description_content_type='text/markdown',

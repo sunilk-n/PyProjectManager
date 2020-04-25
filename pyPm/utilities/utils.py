@@ -30,6 +30,20 @@ def check_for_dependency(dependency, package_dict):
             return True
     return False
 
+def check_for_dep_version(dependency, package_dict):
+    module = dependency[0]
+    m_version = None
+    if len(dependency) == 2:
+        m_version = dependency[1]
+    if not m_version:
+        return True
+    for savedModule in package_dict['dependency']:
+        if module == savedModule[0]:
+            if m_version == savedModule[1]:
+                return True
+    return False
+
+
 
 def check_for_module(module, package_dict):
     for module in package_dict['module']:

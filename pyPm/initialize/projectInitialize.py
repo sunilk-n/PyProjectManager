@@ -89,8 +89,8 @@ def init_project(install_path, project=None):
         "authorMail": AUTHOR_EMAIL,
         "license": LICENSE,
         "url": GIT_REPO,
-        "dependency": [],
-        "module": [],
+        "dependency": package_dict.get("dependency", []),
+        "module": package_dict.get("module", []),
     }
 
     log.warning("About to write the following dictionary to <package>.json\n")

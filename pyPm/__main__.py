@@ -7,6 +7,7 @@ from pyPm import __version__
 from pyPm.initialize import projectInitialize as pInit
 from pyPm.install import builder as p_build
 from pyPm.utilities import utils
+from pyPm.utilities import moduleVersion
 
 OUTPUT_DIR = _os.getcwd()
 log = logging.getLogger(__name__)
@@ -59,13 +60,28 @@ Press ^C at any time to quit.
             )
             return
         else:
+            dep = False
             if utils.check_for_dependency(dependency, package_dict):
-                log.warning("Dependency '%s' already added to the project" % dependency[0])
-                return
+                dep = True
+                if utils.check_for_dep_version(dependency, package_dict):
+                    log.warning("Dependency '%s' already added to the project" % dependency[0])
+                    return
+                dep_version = False
             if len(dependency) == 2:
+                if dep:
+                    for i, module in enumerate(package_dict['dependency']):
+                        if module[0] == dependency[0]:
+                            package_dict['dependency'].pop(i)
+                            break
+
+                m_version = moduleVersion.get_module_version(dependency[0], module_version=dependency[1])
+                if not m_version:
+                    # click.echo("Unable to find the module/module version. Exiting...")
+                    sys.exit()
                 package_dict['dependency'].append(dependency)
             elif len(dependency) == 1:
-                package_dict['dependency'].append([dependency[0], None])
+                m_version = moduleVersion.get_module_version(dependency[0])
+                package_dict['dependency'].append([dependency[0], m_version])
             pInit.create_files(OUTPUT_DIR, ".%s.json" % project, data=package_dict)
             click.echo("Dependency updated with %s module" % dependency[0])
             return
@@ -118,7 +134,7 @@ def install(context, project):
 
 @cli.command()
 @click.pass_context
-@click.argument("option",)
+@click.argument("option")
 @click.help_option("-h", "--help", help="Displays this help options and exits")
 def help(context, option):
     options = ['init', 'install']
