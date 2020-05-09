@@ -23,6 +23,12 @@ def setup_structure(output, package_dict):
         package_dict['name'],
         os.path.join(package_dict['name'], package_dict['package'])
     ]
+    user_modules = [os.path.join(
+        package_dict['name'],
+        package_dict['package'],
+        module
+    ) for module in package_dict['module']]
+    directories.extend(user_modules)
 
     files = [
         os.path.join(package_dict['name'], "README.md"),
@@ -31,6 +37,8 @@ def setup_structure(output, package_dict):
         os.path.join(package_dict['name'], os.path.join(package_dict['package'], "__init__.py")),
         os.path.join(package_dict['name'], os.path.join(package_dict['package'], package_dict['main']))
     ]
+    user_module_initialise = [os.path.join(module_dir, '__init__.py') for module_dir in user_modules]
+    files.extend(user_module_initialise)
 
     for directory in directories:
         utils.create_directory(output, directory)
@@ -49,7 +57,7 @@ def install(output, package_dict):
     init_build_file = init_builder.command_builder(package_dict)
     main_build_file = main_builder.command_builder(package_dict)
     setup_build_file = setup_builder.commands(package_dict)
+    print("Writing new files to the scripts")
     utils.write_file(script_files[3], data=init_build_file)
     utils.write_file(script_files[4], data=main_build_file)
     utils.write_file(script_files[2], data=setup_build_file)
-

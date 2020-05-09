@@ -1,3 +1,6 @@
+"""
+    Main entry point for the application to start
+"""
 import sys
 import os as _os
 import click
@@ -15,6 +18,7 @@ log = logging.getLogger(__name__)
 
 @click.group()
 @click.version_option(version=__version__, prog_name="PyProjectManager")
+@click.help_option("-h", "--help", help="Displays this help options and exits")
 @click.option('--verbose', is_flag=True, help='Displays all the log.')
 @click.pass_context
 def cli(context, verbose):
@@ -149,18 +153,21 @@ def help(context, option):
 Complete help information about init:
     * pyPm init : Starts project initialization
     * pyPm init [-p <projectName>] : Starts project initialization setting projectName as provided
-    * pyPm init [-p <projectName> -d <dependancy>] : Adds dependancy to the project
-        Usage: pyPm -p <projectName> -d <moduleName> [<module_version>]
-            * pyPm -p PyProjectManager -d click (or)
-            * pyPm -p PyProjectManager -d click 7.1.1
-    * pyPm init [-p <projectName> -m <module>] : Adds user defined module to the project
-        Usage: pyPm -p <projectName> -m <moduleName>
-            * pyPm -p PyProjectManager -m testModule 
+    * pyPm init [-p <projectName> -d <dependancy>] : Adds 3rd party dependancy modules to the project
+        Usage: pyPm init -p <projectName> -d <moduleName> [<module_version>]
+            * Ex: pyPm init -p PyProjectManager -d click (or)
+            * Ex: pyPm init -p PyProjectManager -d click 7.1.1
+    * pyPm init [-p <projectName> -m <module>] : Adds user defined module package to the project
+        Usage: pyPm init -p <projectName> -m <moduleName>
+            * Ex: pyPm init -p PyProjectManager -m testModule 
         """
-        click.echo(helper_msg)
 
     elif option == "install":
         helper_msg = """
 Complete help information about install:
     * pyPm install [-p <projectName>] : Starts installing project to the current directory
+        Usage: pyPm install -p <projectName>
+            * Ex: pyPm install -p PyProjectManager
         """
+
+    click.echo(helper_msg)

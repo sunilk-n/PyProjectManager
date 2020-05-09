@@ -3,9 +3,9 @@ from pyPm.utilities import utils
 from pyPm.install import utils as install_utils
 
 
-class CommandGenerator(install_utils.CommandInitializer):
+class SetupCommandGenerator(install_utils.CommandInitializer):
     def __init__(self, *args):
-        super().__init__(*args)
+        super(SetupCommandGenerator, self).__init__(*args)
 
     @property
     def importer(self):
@@ -84,6 +84,12 @@ class CommandGenerator(install_utils.CommandInitializer):
         dependencyStr = ", ".join([
             "'%s'" % "==".join(module) if module[1] else "'%s'" % module[0] for module in self.package_dict['dependency']
         ])
+        packageStr = ', '.join(
+            [
+                # "%s.initialize" % packageName
+                '"%s.{}" % packageName'.format(pkg) for pkg in self.package_dict['module']
+            ]
+        )
         return [
             "setup(",
             "   name=packageName,",
@@ -94,6 +100,7 @@ class CommandGenerator(install_utils.CommandInitializer):
             "       packageName,",
             "       # Add modules under your package to build while installing your module",
             "       # Like packageName.utilities, <your packageName>.<module under your package>",
+            "       %s" % packageStr,
             "   ],",
             "   install_requires=[",
             # TODO: Add dependency modules
@@ -143,8 +150,8 @@ class CommandGenerator(install_utils.CommandInitializer):
 
 
 def commands(package_dict):
-    cmd_gen = CommandGenerator(package_dict)
-    setup_file = utils.build_cmd_file(cmd_gen.initializer, class_or_def=False)
+    cmd_gen = SetupCommandGenerator(package_dict)
+    setup_file = utils.build_cmd_file(cmd_gen.initializer, script_list=[], class_or_def=False)
     setup_file = utils.build_cmd_file(cmd_gen.importer, script_list=setup_file, class_or_def=False)
     setup_file = utils.build_cmd_file(cmd_gen.cleanClass, script_list=setup_file)
     setup_file = utils.build_cmd_file(cmd_gen.globRmtreeDef, script_list=setup_file)
