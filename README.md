@@ -1,10 +1,12 @@
 # PyProjectManager
 Python project manager smooths workflow to create, install and maintain python projects
 
-####Requirements
+Requirements
+------------
 The package is tested and working with Click 7.1.1. Other required packages are specified in setup files.
 
-###Method of installation
+Method of installation
+----------------------
 
 To install Python Project manager from PyPi run this command in terminal
 
@@ -25,7 +27,8 @@ python setup.py sdist
 ```
 To get the ".gz" file
 
-###Complete help information about `init`:
+Complete help information about `init`:
+---------------------------------------
 
 * pyPm init : Starts project initialization
 * `pyPm init [-p <projectName>]` : Starts project initialization setting projectName as provided
@@ -38,7 +41,8 @@ To get the ".gz" file
         * Ex: `pyPm init -p PyProjectManager -m testModule`
 
 
-###Complete help information about `install`:
+Complete help information about `install`:
+------------------------------------------
 * `pyPm install [-p <projectName>]` : Starts installing project to the current directory
     - Usage: `pyPm install -p <projectName>`
         * Ex: `pyPm install -p PyProjectManager`
