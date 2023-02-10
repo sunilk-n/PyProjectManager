@@ -9,7 +9,7 @@ The package is tested and working with Click 7.1.1. Other required packages are 
 To install Python Project manager from PyPi run this command in terminal
 
 ```
-pip install pyPm
+pip install pyPman
 ```
 
 Or
@@ -30,12 +30,14 @@ To get the ".gz" file
 * pyPm init : Starts project initialization
 * `pyPm init [-p <projectName>]` : Starts project initialization setting projectName as provided
 * `pyPm init [-p <projectName> -d <dependancy>]` : Adds 3rd party dependancy modules to the project
-    - Usage: `pyPm init -p <projectName> -d <moduleName> [<module_version>]`
-        * Ex: `pyPm init -p PyProjectManager -d click` (or)
-        * Ex: `pyPm init -p PyProjectManager -d click 7.1.1`
-* `pyPm init [-p <projectName> -m <module>]` : Adds user defined module package to the project
+        Usage: `pyPm init -p <projectName> -d <moduleName>[==<module_version>]`....
+                Mentioning no version will take the latest version of specified dependency
+            * Ex: `pyPm init -p PyProjectManager -d click` (or)
+            * Ex: `pyPm init -p PyProjectManager -d click==7.1.1`
+            * Ex: `pyPm init -p PyProjectManager -d click==7.1.1 -d traVer`...(For multiple dependencies
+* `pyPm init [-p <projectName> -m <module> -m <module>...]` : Adds user defined module package to the project
     - Usage: `pyPm init -p <projectName> -m <moduleName>`
-        * Ex: `pyPm init -p PyProjectManager -m testModule`
+        * Ex: `pyPm init -p PyProjectManager -m testModule -m testModule2`
 
 
 ###Complete help information about `install`:
