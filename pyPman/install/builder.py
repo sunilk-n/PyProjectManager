@@ -12,8 +12,8 @@ Build structure:
 
 """
 import os
-from pyPm.install import setup_builder, init_builder, main_builder, readme_builder, license_builder
-from pyPm.utilities import utils
+from pyPman.install import setup_builder, init_builder, main_builder, readme_builder, license_builder
+from pyPman.utilities import utils
 
 
 def setup_structure(output, package_dict):

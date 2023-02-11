@@ -30,21 +30,21 @@ To get the ".gz" file
 Complete help information about `init`:
 ---------------------------------------
 
-* pyPm init : Starts project initialization
-* `pyPm init [-p <projectName>]` : Starts project initialization setting projectName as provided
-* `pyPm init [-p <projectName> -d <dependancy>]` : Adds 3rd party dependancy modules to the project
-        Usage: `pyPm init -p <projectName> -d <moduleName>[==<module_version>]`....
+* pyPman init : Starts project initialization
+* `pyPman init [-p <projectName>]` : Starts project initialization setting projectName as provided
+* `pyPman init [-p <projectName> -d <dependancy>]` : Adds 3rd party dependancy modules to the project
+        Usage: `pyPman init -p <projectName> -d <moduleName>[==<module_version>]`....
                 Mentioning no version will take the latest version of specified dependency
-            * Ex: `pyPm init -p PyProjectManager -d click` (or)
-            * Ex: `pyPm init -p PyProjectManager -d click==7.1.1`
-            * Ex: `pyPm init -p PyProjectManager -d click==7.1.1 -d traVer`...(For multiple dependencies
-* `pyPm init [-p <projectName> -m <module> -m <module>...]` : Adds user defined module package to the project
-    - Usage: `pyPm init -p <projectName> -m <moduleName>`
-        * Ex: `pyPm init -p PyProjectManager -m testModule -m testModule2`
+            * Ex: `pyPman init -p PyProjectManager -d click` (or)
+            * Ex: `pyPman init -p PyProjectManager -d click==7.1.1`
+            * Ex: `pyPman init -p PyProjectManager -d click==7.1.1 -d traVer`...(For multiple dependencies
+* `pyPman init [-p <projectName> -m <module> -m <module>...]` : Adds user defined module package to the project
+    - Usage: `pyPman init -p <projectName> -m <moduleName>`
+        * Ex: `pyPman init -p PyProjectManager -m testModule -m testModule2`
 
 
 Complete help information about `install`:
 ------------------------------------------
-* `pyPm install [-p <projectName>]` : Starts installing project to the current directory
-    - Usage: `pyPm install -p <projectName>`
-        * Ex: `pyPm install -p PyProjectManager`
+* `pyPman install [-p <projectName>]` : Starts installing project to the current directory
+    - Usage: `pyPman install -p <projectName>`
+        * Ex: `pyPman install -p PyProjectManager`

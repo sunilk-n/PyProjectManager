@@ -21,9 +21,9 @@ PyProjectManager Version 1.x
 
 * `New Features`
     * Updated the new dependency adding to the project
-        `pyPm init -p projectName -d <moduleName> <moduleVersion>`
+        `pyPman init -p projectName -d <moduleName> <moduleVersion>`
     * Updated the way to add multiple dependencies and module
-        `pyPm init -p projectName -d <moduleName -d <moduleName1> -m <dirName>...`
+        `pyPman init -p projectName -d <moduleName -d <moduleName1> -m <dirName>...`
 * `Bug Fixes`
     * Fixed dependencies issue while running the command adding dependencies
     * Updated Readme with actual install commands and running pyPm cli

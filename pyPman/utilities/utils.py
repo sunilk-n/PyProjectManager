@@ -2,7 +2,7 @@ import os
 import click
 import logging
 
-from pyPm.initialize import projectInitialize as pInit
+from pyPman.initialize import projectInitialize as pInit
 
 log = logging.getLogger(__name__)
 

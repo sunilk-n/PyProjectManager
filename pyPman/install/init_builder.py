@@ -1,8 +1,8 @@
 import os
 
-import pyPm
-from pyPm.utilities import utils
-from pyPm.install.utils import CommandInitializer
+import pyPman
+from pyPman.utilities import utils
+from pyPman.install.utils import CommandInitializer
 
 
 class InitCommandGenerator(CommandInitializer):

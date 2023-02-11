@@ -3,7 +3,7 @@ import os
 from glob import glob
 from shutil import rmtree
 
-packageName = "pyPm"
+packageName = "pyPman"
 try:
     from setuptools.command.clean import clean as clean_command
 except ImportError as err:
@@ -96,7 +96,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pyPm=pyPm.__main__:cli'
+            'pyPman=pyPman.__main__:cli'
         ],
     },
     cmdclass={

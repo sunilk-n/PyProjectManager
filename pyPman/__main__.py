@@ -6,11 +6,11 @@ import os as _os
 import click
 import logging
 
-from pyPm import __version__
-from pyPm.initialize import projectInitialize as pInit
-from pyPm.install import builder as p_build
-from pyPm.utilities import utils
-from pyPm.utilities import moduleVersion
+from pyPman import __version__
+from pyPman.initialize import projectInitialize as pInit
+from pyPman.install import builder as p_build
+from pyPman.utilities import utils
+from pyPman.utilities import moduleVersion
 
 OUTPUT_DIR = _os.getcwd()
 log = logging.getLogger(__name__)
@@ -46,9 +46,9 @@ def init(context, project, dependency, module):
     logger = """
 This utility will walk you through creating a setup.py file. It only covers the most common items, and tries to guess sensible defaults.
 
-See `pyPm help install` for definitive documentation on these fields and exactly what they do.
+See `pyPman help install` for definitive documentation on these fields and exactly what they do.
 
-Use `pyPm install -p <projectName>` afterwards to install a package and save it as a dependency in the setup.py file.
+Use `pyPman install -p <projectName>` afterwards to install a package and save it as a dependency in the setup.py file.
 
 Press ^C at any time to quit.
     """
@@ -61,7 +61,7 @@ Press ^C at any time to quit.
         if pInit.check_for_project(OUTPUT_DIR, pkg_file=project):
             package_dict = pInit.get_project_details(OUTPUT_DIR, pkg_file=project)
         if not package_dict:
-            log.warning("Unable to find the project {0}, Please run `pyPm init --project {0}` to add dependency".format(
+            log.warning("Unable to find the project {0}, Please run `pyPman init --project {0}` to add dependency".format(
                 project
             )
             )
@@ -113,7 +113,7 @@ Press ^C at any time to quit.
         if pInit.check_for_project(OUTPUT_DIR, pkg_file=project):
             package_dict = pInit.get_project_details(OUTPUT_DIR, pkg_file=project)
         if not package_dict:
-            log.warning("Unable to find the project {0}, Please run `pyPm init --project {0}` to add dependency"
+            log.warning("Unable to find the project {0}, Please run `pyPman init --project {0}` to add dependency"
                 .format(project)
             )
             return
@@ -141,7 +141,7 @@ def install(context, project):
     if pInit.check_for_project(OUTPUT_DIR, pkg_file=project):
         package_dict = pInit.get_project_details(OUTPUT_DIR, pkg_file=project)
     if not package_dict:
-        log.warning("Unable to find the project {0}, Please run `pyPm init --project {0}` to add dependency".format(
+        log.warning("Unable to find the project {0}, Please run `pyPman init --project {0}` to add dependency".format(
                 project
             )
         )
@@ -157,7 +157,7 @@ def install(context, project):
 def help(context, option):
     options = ['init', 'install']
     if not option in options:
-        log.error("No option called '%s' in pyPm" % option)
+        log.error("No option called '%s' in pyPman" % option)
         sys.exit()
     click.echo("Displays help for the option given %s" % option)
 
@@ -165,26 +165,26 @@ def help(context, option):
     if option == "init":
         helper_msg = """
 Complete help information about init:
-    * pyPm init : Starts project initialization
-    * pyPm init [-p <projectName>] : Starts project initialization setting projectName as provided
-    * pyPm init [-p <projectName> -d <dependancy>] : Adds 3rd party dependancy modules to the project
-        Usage: pyPm init -p <projectName> -d <moduleName>[==<module_version>]....
+    * pyPman init : Starts project initialization
+    * pyPman init [-p <projectName>] : Starts project initialization setting projectName as provided
+    * pyPman init [-p <projectName> -d <dependancy>] : Adds 3rd party dependancy modules to the project
+        Usage: pyPman init -p <projectName> -d <moduleName>[==<module_version>]....
                 Mentioning no version will take the latest version of specified dependency
-            * Ex: pyPm init -p PyProjectManager -d click (or)
-            * Ex: pyPm init -p PyProjectManager -d click==7.1.1
-            * Ex: pyPm init -p PyProjectManager -d click==7.1.1 -d traVer...(For multiple dependencies
-    * pyPm init [-p <projectName> -m <module>] : Adds user defined module package to the project
-        Usage: pyPm init -p <projectName> -m <moduleName>
-            * Ex: pyPm init -p PyProjectManager -m testModule 
-            * Ex: pyPm init -p PyProjectManager -m testModule1 -m testModule2 ...
+            * Ex: pyPman init -p PyProjectManager -d click (or)
+            * Ex: pyPman init -p PyProjectManager -d click==7.1.1
+            * Ex: pyPman init -p PyProjectManager -d click==7.1.1 -d traVer...(For multiple dependencies
+    * pyPman init [-p <projectName> -m <module>] : Adds user defined module package to the project
+        Usage: pyPman init -p <projectName> -m <moduleName>
+            * Ex: pyPman init -p PyProjectManager -m testModule 
+            * Ex: pyPman init -p PyProjectManager -m testModule1 -m testModule2 ...
         """
 
     elif option == "install":
         helper_msg = """
 Complete help information about install:
-    * pyPm install [-p <projectName>] : Starts installing project to the current directory
-        Usage: pyPm install -p <projectName>
-            * Ex: pyPm install -p PyProjectManager
+    * pyPman install [-p <projectName>] : Starts installing project to the current directory
+        Usage: pyPman install -p <projectName>
+            * Ex: pyPman install -p PyProjectManager
         """
 
     click.echo(helper_msg)

@@ -1,6 +1,6 @@
 import os
-from pyPm.utilities import utils
-from pyPm.install import utils as install_utils
+from pyPman.utilities import utils
+from pyPman.install import utils as install_utils
 
 
 class SetupCommandGenerator(install_utils.CommandInitializer):
